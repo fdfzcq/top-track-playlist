@@ -24,7 +24,7 @@ object CodePubPlaylistJob {
     // Step1. Extract the Ids from your top tracks
     // First check how `CodePubTrack.avsc` looks like and remember Avro magic from slides!
     // Here's one more hint: use `.toString` to convert to String.
-    val ids: Seq[String] = topTracksRequest.map(???)
+    val ids: Seq[String] = topTracksRequest.map(s => s.getId().toString() )
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     // Get audio features for your top tracks
@@ -40,13 +40,19 @@ object CodePubPlaylistJob {
     // You already have some recipes inside slides.
     // For example, I'd like to create a playlist for dance with danceability > 0.7 songs
     // BE CREATIVE!!
-    val trackAudioFeaturesInMood = parallelTrackAudioFeatures.filter(???)
+    val trackAudioFeaturesInMood = parallelTrackAudioFeatures.filter(
+        p => p.getEnergy() < 0.1 &&
+             p.getInstrumentalness() > 0.8 &&
+             p.getTempo > 100 &&
+             p.getValence() < 0.3 &&
+             p.getLoudness < -30
+         )
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     // Step3. Extract the track Ids
     // You need schema here again. We did the similar thing already, right?
-    val trackIdsInMood = trackAudioFeaturesInMood.map(???)
+    val trackIdsInMood = trackAudioFeaturesInMood.map(t => t.getId())
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     // Save the results to a text file
@@ -68,7 +74,7 @@ object CodePubPlaylistJob {
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     // Step4. Define your playlist name. For example, "CodePub Playlist!"
-    val playlistName = ???
+    val playlistName = "foo_bar"
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     // Create a new playlist for your user

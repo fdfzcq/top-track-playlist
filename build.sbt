@@ -29,7 +29,7 @@ lazy val commonSettings = Defaults.coreDefaultSettings ++ Seq(
   resolvers ++= Seq(
     "Concurrent Maven Repo" at "http://conjars.org/repo",
     "sonatype-releases" at "https://oss.sonatype.org/content/repositories/releases/",
-    "Artifactory" at "https://artifactory.spotify.net/artifactory/repo",
+    //"Artifactory" at "https://artifactory.spotify.net/artifactory/repo",
     Resolver.mavenLocal
   ),
 
